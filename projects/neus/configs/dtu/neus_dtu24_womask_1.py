@@ -77,7 +77,7 @@ optim = dict(
     betas=(0.9,0.99),
 )
 
-base_exp_dir = './log/dtu_scan24/womask_1'
+base_exp_dir = '../log/dtu_scan24/womask_1'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05

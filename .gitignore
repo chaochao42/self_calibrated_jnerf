@@ -1,3 +1,5 @@
 # folders
 /log/
 /data/
+/scripts/log/
+/*/__pycache__/
