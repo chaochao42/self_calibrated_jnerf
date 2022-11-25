@@ -81,10 +81,10 @@ class NeuS_Trainable_Runner:
         image_perm = self.get_image_perm()
 
         for iter_i in tqdm(range(res_step)):
-            if iter_i % 100 == 0:
+            if iter_i % 1000 == 0:
                 print("====================================")
                 print(f"Whether graident: {self.dataset.pose_all.requires_grad}")
-                jt.save(self.dataset.pose_all, f"./iter_{iter_i}.npy")
+                jt.save(self.dataset.pose_all, f"./npy/iter_{iter_i}.npy")
                 print("====================================")
 
             data = self.dataset.gen_random_rays_at(image_perm[self.iter_step % len(image_perm)], self.batch_size)
