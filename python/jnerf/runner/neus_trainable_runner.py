@@ -60,6 +60,7 @@ class NeuS_Trainable_Runner:
         self.learning_rate = self.cfg.optim.lr
         self.optimizer = build_from_cfg(self.cfg.optim, OPTIMS, params=self.neus_network.parameters())
 
+        self.camera_optimizer = build_from_cfg(self.cfg.camera_optim, OPTIMS, params=[self.dataset.pose_all])
         # Load checkpoint
         latest_model_name = None
         if is_continue:
@@ -125,8 +126,13 @@ class NeuS_Trainable_Runner:
 
             self.optimizer.zero_grad()
             self.optimizer.backward(loss)
-            self.optimizer.step()
 
+
+            self.camera_optimizer.zero_grad()
+            self.camera_optimizer.backward(loss)
+
+            self.optimizer.step()
+            self.camera_optimizer.step()
             self.iter_step += 1
 
             if self.iter_step % self.report_freq == 0:
