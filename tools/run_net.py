@@ -46,7 +46,7 @@ def main():
     
     args = parser.parse_args()
 
-    assert args.type in ["novel_view","mesh"],f"{args.type} not support, please choose [novel_view, mesh]"
+    assert args.type in ["novel_view","mesh", "self_calibrated"],f"{args.type} not support, please choose [novel_view, mesh]"
     assert args.task in ["train","test","render", "validate_mesh"],f"{args.task} not support, please choose [train, test, render, validate_mesh]"
     
     if args.task == 'validate_mesh':
