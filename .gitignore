@@ -4,3 +4,4 @@
 /scripts/log/
 /*/__pycache__/
 /docs/
+*.npy
