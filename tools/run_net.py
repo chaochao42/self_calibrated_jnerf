@@ -4,7 +4,7 @@ from tqdm import tqdm
 import argparse
 import numpy as np
 import os
-from jnerf.runner import Runner,NeuSRunner
+from jnerf.runner import Runner,NeuSRunner, NeuS_Trainable_Runner
 from jnerf.utils.config import init_cfg, get_cfg
 from jnerf.utils.registry import build_from_cfg,NETWORKS,SCHEDULERS,DATASETS,OPTIMS,SAMPLERS,LOSSES
 # jt.flags.gopt_disable=1
@@ -59,6 +59,8 @@ def main():
         runner = Runner()
     elif args.type == 'mesh':
         runner = NeuSRunner() #is_continue=is_continue)
+    elif args.type == 'self_calibrated':
+        runner = NeuS_Trainable_Runner()
     else:
         print('Not support yet!')
 
