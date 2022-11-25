@@ -9,7 +9,7 @@ from jnerf.utils.config import init_cfg, get_cfg
 from jnerf.utils.registry import build_from_cfg,NETWORKS,SCHEDULERS,DATASETS,OPTIMS,SAMPLERS,LOSSES
 # jt.flags.gopt_disable=1
 jt.flags.use_cuda = 1
-
+# jt.flags.lazy_execution=0
 
 def main():
     assert jt.flags.cuda_archs[0] >= 61, "Failed: Sm arch version is too low! Sm arch version must not be lower than sm_61!"

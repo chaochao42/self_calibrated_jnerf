@@ -24,6 +24,10 @@ python/jnerf/dataset/__pycache__/neus_dataset.cpython-38.pyc
 python/jnerf/dataset/__pycache__/neus_dataset_trainable.cpython-38.pyc
 python/jnerf/models/__init__.py
 python/jnerf/models/__pycache__/__init__.cpython-38.pyc
+python/jnerf/models/camera_model/__init__.py
+python/jnerf/models/camera_model/trainable_camera.py
+python/jnerf/models/camera_model/__pycache__/__init__.cpython-38.pyc
+python/jnerf/models/camera_model/__pycache__/trainable_camera.cpython-38.pyc
 python/jnerf/models/losses/__init__.py
 python/jnerf/models/losses/huber_loss.py
 python/jnerf/models/losses/mse_loss.py
@@ -1881,6 +1885,7 @@ python/jnerf/runner/neus_trainable_runner.py
 python/jnerf/runner/runner.py
 python/jnerf/runner/__pycache__/__init__.cpython-38.pyc
 python/jnerf/runner/__pycache__/neus_runner.cpython-38.pyc
+python/jnerf/runner/__pycache__/neus_trainable_runner.cpython-38.pyc
 python/jnerf/runner/__pycache__/runner.cpython-38.pyc
 python/jnerf/utils/__init__.py
 python/jnerf/utils/camera_utils.py

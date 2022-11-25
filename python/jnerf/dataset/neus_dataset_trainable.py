@@ -111,6 +111,7 @@ class NeuS_Trainable_Dataset:
         p = self.jt_matmul(self.intrinsics_all_inv[img_idx, None, None, :3, :3], p[:, :, :, None])  # W, H, 3
         p = p.squeeze(dim=3)
         rays_v = p / jt.norm(p, p=2, dim=-1, keepdim=True, eps=1e-6)  # W, H, 3
+
         rays_v = self.jt_matmul(self.pose_all[img_idx, None, None, :3, :3], rays_v[:, :, :, None])  # W, H, 3
         rays_v = rays_v.squeeze(dim=3)
         rays_o = self.pose_all[img_idx, None, None, :3, 3].expand(rays_v.shape)  # W, H, 3
