@@ -1,3 +1,4 @@
+### Larger batchsize
 dataset = dict(
     type = 'NeuS_Trainable_Dataset',
     dataset_dir = '/home/hj2/3d/jnerf/data/dtu_scan24',
@@ -77,20 +78,27 @@ optim = dict(
     betas=(0.9,0.99),
 )
 
+camera_optim = dict(
+    type='Adam',
+    lr=5e-6,
+    eps=1e-15,
+    betas=(0.9,0.99),
+)
+
 base_exp_dir = '../log/trainable_dtu_scan24/womask_1'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05
-end_iter = 400000
+end_iter = 300000
 
 batch_size = 1024
 validate_resolution_level = 6
-warm_up_end = 10000
-anneal_end = 80000
+warm_up_end = 5000
+anneal_end = 50000
 use_white_bkgd = True
 
-save_freq = 40000
-val_freq = 400
+save_freq = 10000
+val_freq = 200
 val_mesh_freq = 5000
 report_freq = 100
 
