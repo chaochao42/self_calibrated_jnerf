@@ -58,9 +58,9 @@ class NeuS_Trainable_Runner:
         self.renderer.set_neus_network(self.neus_network)
 
         self.learning_rate = self.cfg.optim.lr
-        self.optimizer = build_from_cfg(self.cfg.optim, OPTIMS, params=self.neus_network.parameters())
+        self.optimizer = build_from_cfg(self.cfg.optim, OPTIMS, params=self.neus_network.parameters() + [self.dataset.pose_all])
 
-        self.camera_optimizer = build_from_cfg(self.cfg.camera_optim, OPTIMS, params=[self.dataset.pose_all])
+        # self.camera_optimizer = build_from_cfg(self.cfg.camera_optim, OPTIMS, params=[self.dataset.pose_all])
         # Load checkpoint
         latest_model_name = None
         if is_continue:
@@ -82,12 +82,15 @@ class NeuS_Trainable_Runner:
         image_perm = self.get_image_perm()
 
         for iter_i in tqdm(range(res_step)):
-            if iter_i % 1000 == 0:
-                print("====================================")
-                print(f"Whether graident: {self.dataset.pose_all.requires_grad}")
-                jt.save(self.dataset.pose_all, f"./npy/iter_{iter_i}.npy")
-                print("====================================")
-
+            # if iter_i % 50 == 0:
+            #     print("====================================")
+            #     print(f"Whether graident: {self.dataset.pose_all.requires_grad}")
+            #     jt.save(self.dataset.pose_all, f"./npy/iter_{iter_i}.npy")
+            #     print("====================================")
+            # print("===================================")
+            # print(f"=====Type {type(self.neus_network.parameters())} and Length {len(self.neus_network.parameters())}")
+            # print(f"===================== Element 0: {type(self.neus_network.parameters()[0])}")
+            # print("===================================")
             data = self.dataset.gen_random_rays_at(image_perm[self.iter_step % len(image_perm)], self.batch_size)
 
             rays_o, rays_d, true_rgb, mask = data[:, :3], data[:, 3: 6], data[:, 6: 9], data[:, 9: 10]
@@ -128,11 +131,11 @@ class NeuS_Trainable_Runner:
             self.optimizer.backward(loss)
 
 
-            self.camera_optimizer.zero_grad()
-            self.camera_optimizer.backward(loss)
+            # self.camera_optimizer.zero_grad()
+            # self.camera_optimizer.backward(loss)
 
             self.optimizer.step()
-            self.camera_optimizer.step()
+            # self.camera_optimizer.step()
             self.iter_step += 1
 
             if self.iter_step % self.report_freq == 0:
@@ -171,6 +174,8 @@ class NeuS_Trainable_Runner:
             learning_factor = (np.cos(np.pi * progress) + 1.0) * 0.5 * (1 - alpha) + alpha
         for g in self.optimizer.param_groups:
             g['lr'] = self.learning_rate * learning_factor
+        # for g in self.camera_optimizer.param_groups:
+        #     g['lr'] = self.learning_rate * learning_factor
 
     def load_checkpoint(self, checkpoint_name):
         checkpoint = jt.load(os.path.join(self.base_exp_dir, 'checkpoints', checkpoint_name))
