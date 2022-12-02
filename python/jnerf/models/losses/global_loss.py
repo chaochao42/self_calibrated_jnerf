@@ -1,5 +1,6 @@
 import jittor as jt
 from jittor import nn
+from jittor.contrib import getitem
 from jnerf.utils.registry import LOSSES
 import random
 import numpy as np
@@ -32,11 +33,21 @@ class GlobalLoss(nn.Module):
         index_x, value_x = jt.argsort(theta_x)
         index_y, value_y = jt.argsort(theta_y)
         index_z, value_z = jt.argsort(theta_z)
-        print("===================================")
-        print(f"Index x==============")
-        print(index_x, value_x)
-        print(f"Index y==============")
-        print(index_y, value_y)
-        print(f"Index z==============")
-        print(index_z, value_z)
+
+        value_x_moved = getitem(value_x, [3, 0, 1, 2])
+        value_y_moved = getitem(value_y, [3, 0, 1, 2])
+        value_z_moved = getitem(value_z, [3, 0, 1, 2])
+
+        diff_x = (value_x - value_x_moved).unsqueeze(0)
+        diff_y = (value_y - value_y_moved).unsqueeze(0)
+        diff_z = (value_z - value_z_moved).unsqueeze(0)
+        Diff_matrix = jt.concat([diff_x, diff_y, diff_z], dim=0)
+        target_1 = jt.sum(jt.abs(Diff_matrix[:, 0]))
+        target_2 = jt.sum(jt.abs(Diff_matrix[:, 1:]))
+        print("==================================================")
+        print(Diff_matrix[:, 0])
+        print("-------------------")
+        print(Diff_matrix[:, 1:])
+        print(f"================ target_1 {target_1}")
+        print(f"================ target_2 {target_2}")
         #relative_1 =
