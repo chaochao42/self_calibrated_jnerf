@@ -29,7 +29,9 @@ python/jnerf/models/camera_model/trainable_camera.py
 python/jnerf/models/camera_model/__pycache__/__init__.cpython-38.pyc
 python/jnerf/models/camera_model/__pycache__/trainable_camera.cpython-38.pyc
 python/jnerf/models/losses/__init__.py
+python/jnerf/models/losses/global_loss.py
 python/jnerf/models/losses/huber_loss.py
+python/jnerf/models/losses/local_loss.py
 python/jnerf/models/losses/mse_loss.py
 python/jnerf/models/losses/__pycache__/__init__.cpython-38.pyc
 python/jnerf/models/losses/__pycache__/huber_loss.cpython-38.pyc

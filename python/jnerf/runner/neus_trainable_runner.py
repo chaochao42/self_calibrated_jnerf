@@ -11,6 +11,7 @@ from tqdm import tqdm
 from jnerf.dataset.neus_dataset import NeuSDataset
 from jnerf.models.networks.neus_network import NeuS
 from jnerf.models.samplers.neus_render.renderer import NeuSRenderer
+from jnerf.models.losses.global_loss import GlobalLoss
 
 from jnerf.utils.config import init_cfg, get_cfg
 from jnerf.utils.registry import build_from_cfg, NETWORKS, SCHEDULERS, DATASETS, OPTIMS, SAMPLERS, LOSSES
