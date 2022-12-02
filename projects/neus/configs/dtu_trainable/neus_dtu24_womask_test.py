@@ -79,7 +79,7 @@ optim = dict(
     betas=(0.9,0.99),
 )
 
-base_exp_dir = '../log/trainable_dtu_scan24/womask_2'
+base_exp_dir = '../log/trainable_dtu_scan24/test'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05
@@ -98,3 +98,5 @@ report_freq = 100
 
 igr_weight = 0.1
 mask_weight = 0.0
+global_weight = 0.2
+local_weight = 0.1

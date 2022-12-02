@@ -47,6 +47,8 @@ class NeuS_Trainable_Runner:
         # Weights
         self.igr_weight = self.cfg.igr_weight
         self.mask_weight = self.cfg.mask_weight
+        self.global_weight = self.cfg.global_weight
+        self.local_weight = self.cfg.local_weight
         self.is_continue = is_continue
         self.mode = mode
         self.model_list = []
