@@ -62,7 +62,7 @@ class NeuS_Trainable_Runner:
 
         self.learning_rate = self.cfg.optim.lr
         self.optimizer = build_from_cfg(self.cfg.optim, OPTIMS, params=self.neus_network.parameters() + [self.dataset.pose_all])
-
+        self.global_loss = GlobalLoss()
         # self.camera_optimizer = build_from_cfg(self.cfg.camera_optim, OPTIMS, params=[self.dataset.pose_all])
         # Load checkpoint
         latest_model_name = None
@@ -125,6 +125,8 @@ class NeuS_Trainable_Runner:
             eikonal_loss = gradient_error
 
             mask_loss = jt.nn.binary_cross_entropy_with_logits(weight_sum.safe_clip(1e-3, 1.0 - 1e-3), mask)
+
+            global_loss = self.global_loss(self.dataset.pose_all)
 
             loss = color_fine_loss + \
                    eikonal_loss * self.igr_weight + \

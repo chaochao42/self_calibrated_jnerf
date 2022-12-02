@@ -34,6 +34,7 @@ python/jnerf/models/losses/huber_loss.py
 python/jnerf/models/losses/local_loss.py
 python/jnerf/models/losses/mse_loss.py
 python/jnerf/models/losses/__pycache__/__init__.cpython-38.pyc
+python/jnerf/models/losses/__pycache__/global_loss.cpython-38.pyc
 python/jnerf/models/losses/__pycache__/huber_loss.cpython-38.pyc
 python/jnerf/models/losses/__pycache__/mse_loss.cpython-38.pyc
 python/jnerf/models/networks/__init__.py

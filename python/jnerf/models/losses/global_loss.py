@@ -7,6 +7,8 @@ class GlobalLoss(nn.Module):
     def __init__(self, delta=1):
         self.delta = delta
     def execute(self, poses):
-        print(poses.shape)
+
         numbers = len(poses)
+
         pose_list = jt.misc.chunk(poses, numbers, 0)
+        print(f"========={poses.shape}======={numbers}=========Length {len(pose_list)}====index 0 shape{pose_list[0].shape}")
