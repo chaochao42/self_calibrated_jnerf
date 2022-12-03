@@ -130,7 +130,8 @@ class NeuS_Trainable_Runner:
 
             loss = color_fine_loss + \
                    eikonal_loss * self.igr_weight + \
-                   mask_loss * self.mask_weight
+                   mask_loss * self.mask_weight + \
+                   global_loss * self.global_weight
 
             self.optimizer.zero_grad()
             self.optimizer.backward(loss)

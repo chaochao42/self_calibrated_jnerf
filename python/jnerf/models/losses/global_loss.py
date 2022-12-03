@@ -30,24 +30,30 @@ class GlobalLoss(nn.Module):
 
         theta_x, theta_y, theta_z = self.pose_to_angle(pose_var)
 
-        index_x, value_x = jt.argsort(theta_x)
-        index_y, value_y = jt.argsort(theta_y)
-        index_z, value_z = jt.argsort(theta_z)
-
-        value_x_moved = getitem(value_x, [3, 0, 1, 2])
-        value_y_moved = getitem(value_y, [3, 0, 1, 2])
-        value_z_moved = getitem(value_z, [3, 0, 1, 2])
+        # index_x, value_x = jt.argsort(theta_x)
+        # index_y, value_y = jt.argsort(theta_y)
+        # index_z, value_z = jt.argsort(theta_z)
+        #
+        # value_x_moved = getitem(value_x, [3, 0, 1, 2])
+        # value_y_moved = getitem(value_y, [3, 0, 1, 2])
+        # value_z_moved = getitem(value_z, [3, 0, 1, 2])
+        value_x = theta_x
+        value_y = theta_y
+        value_z = theta_z
+        value_x_moved = getitem(theta_x, [3, 0, 1, 2])
+        value_y_moved = getitem(theta_y, [3, 0, 1, 2])
+        value_z_moved = getitem(theta_y, [3, 0, 1, 2])
 
         diff_x = (value_x - value_x_moved).unsqueeze(0)
         diff_y = (value_y - value_y_moved).unsqueeze(0)
         diff_z = (value_z - value_z_moved).unsqueeze(0)
         Diff_matrix = jt.concat([diff_x, diff_y, diff_z], dim=0)
-        target_1 = jt.sum(jt.abs(Diff_matrix[:, 0]))
-        target_2 = jt.sum(jt.abs(Diff_matrix[:, 1:]))
-        print("==================================================")
-        print(Diff_matrix[:, 0])
-        print("-------------------")
-        print(Diff_matrix[:, 1:])
-        print(f"================ target_1 {target_1}")
-        print(f"================ target_2 {target_2}")
-        #relative_1 =
+        # target_1 = jt.sum(jt.abs(Diff_matrix[:, 0]))
+        # target_2 = jt.sum(jt.abs(Diff_matrix[:, 1:]))
+
+        target_1 = jt.abs(jt.sum(Diff_matrix[:, 0]))
+        target_2 = jt.abs(jt.sum(Diff_matrix[:, 1:]))
+
+        global_loss = (target_1 - target_2).abs()
+        return global_loss
+
