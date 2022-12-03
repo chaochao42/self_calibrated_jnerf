@@ -79,7 +79,7 @@ optim = dict(
     betas=(0.9,0.99),
 )
 
-base_exp_dir = '../log/trainable_dtu_scan24/global_0'
+base_exp_dir = '../log/trainable_dtu_scan24/global_0_mask_loss'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05

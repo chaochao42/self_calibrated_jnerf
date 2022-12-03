@@ -146,7 +146,7 @@ class NeuS_Trainable_Runner:
 
             if self.iter_step % self.report_freq == 0:
                 print(self.base_exp_dir)
-                print('iter:{:8>d} loss = {} mask_loss = {} lr={}'.format(self.iter_step, loss, mask_loss, self.optimizer.param_groups[0]['lr']))
+                print('iter:{:8>d} loss = {} global_loss = {} lr = {}'.format(self.iter_step, loss, global_loss, self.optimizer.param_groups[0]['lr']))
 
             if self.iter_step % self.save_freq == 0:
                 self.save_checkpoint()
