@@ -79,13 +79,13 @@ optim = dict(
     betas=(0.9,0.99),
 )
 
-base_exp_dir = '../log/trainable_dtu_scan24/test'
+base_exp_dir = '../log/trainable_dtu_scan24/global_1'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05
-end_iter = 500000
+end_iter = 300000
 
-batch_size = 512
+batch_size = 1024
 validate_resolution_level = 6
 warm_up_end = 5000
 anneal_end = 50000
