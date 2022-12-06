@@ -20,7 +20,7 @@ import jittor as jt
 import jittor.nn as nn
 
 
-class NeuS_Trainable_Freezed_Runner:
+class NeuS_Trainable_Barf_Runner:
     def __init__(self, mode='train', is_continue=False):
 
         # Configuration
@@ -85,7 +85,7 @@ class NeuS_Trainable_Freezed_Runner:
         image_perm = self.get_image_perm()
 
         for iter_i in tqdm(range(res_step)):
-
+            print("=============================================")
             data = self.dataset.gen_random_rays_at(image_perm[self.iter_step % len(image_perm)], self.batch_size)
 
             rays_o, rays_d, true_rgb, mask = data[:, :3], data[:, 3: 6], data[:, 6: 9], data[:, 9: 10]
