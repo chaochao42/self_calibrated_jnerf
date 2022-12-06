@@ -36,6 +36,7 @@ python/jnerf/models/losses/mse_loss.py
 python/jnerf/models/losses/__pycache__/__init__.cpython-38.pyc
 python/jnerf/models/losses/__pycache__/global_loss.cpython-38.pyc
 python/jnerf/models/losses/__pycache__/huber_loss.cpython-38.pyc
+python/jnerf/models/losses/__pycache__/local_loss.cpython-38.pyc
 python/jnerf/models/losses/__pycache__/mse_loss.cpython-38.pyc
 python/jnerf/models/networks/__init__.py
 python/jnerf/models/networks/neus_network.py
@@ -51,6 +52,8 @@ python/jnerf/models/position_encoders/freq_encoder/__init__.py
 python/jnerf/models/position_encoders/freq_encoder/freq_encoder.py
 python/jnerf/models/position_encoders/freq_encoder/__pycache__/__init__.cpython-38.pyc
 python/jnerf/models/position_encoders/freq_encoder/__pycache__/freq_encoder.cpython-38.pyc
+python/jnerf/models/position_encoders/freqbarf_encoder/__init__.py
+python/jnerf/models/position_encoders/freqbarf_encoder/freqbarf_encoder.py
 python/jnerf/models/position_encoders/hash_encoder/__init__.py
 python/jnerf/models/position_encoders/hash_encoder/grid_encode.py
 python/jnerf/models/position_encoders/hash_encoder/hash_encoder.py
@@ -1884,10 +1887,14 @@ python/jnerf/optims/__pycache__/ema.cpython-38.pyc
 python/jnerf/optims/__pycache__/expdecay.cpython-38.pyc
 python/jnerf/runner/__init__.py
 python/jnerf/runner/neus_runner.py
+python/jnerf/runner/neus_trainable_barf_runner.py
+python/jnerf/runner/neus_trainable_freezed_runner.py
 python/jnerf/runner/neus_trainable_runner.py
 python/jnerf/runner/runner.py
 python/jnerf/runner/__pycache__/__init__.cpython-38.pyc
 python/jnerf/runner/__pycache__/neus_runner.cpython-38.pyc
+python/jnerf/runner/__pycache__/neus_trainable_barf_runner.cpython-38.pyc
+python/jnerf/runner/__pycache__/neus_trainable_freezed_runner.cpython-38.pyc
 python/jnerf/runner/__pycache__/neus_trainable_runner.cpython-38.pyc
 python/jnerf/runner/__pycache__/runner.cpython-38.pyc
 python/jnerf/utils/__init__.py
