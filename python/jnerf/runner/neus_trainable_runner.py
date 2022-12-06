@@ -144,6 +144,12 @@ class NeuS_Trainable_Runner:
             # self.camera_optimizer.step()
             self.iter_step += 1
 
+
+            ######### For freeze##########
+            #print(self.optimizer.param_groups)
+            print(type(self.optimizer.param_groups[0]['params']))
+
+            ##########################################
             if self.iter_step % self.report_freq == 0:
                 print(self.base_exp_dir)
                 print('iter:{:8>d} loss = {} global_loss = {} eik_loss = {} lr = {}'.format(self.iter_step, loss, global_loss, eikonal_loss, self.optimizer.param_groups[0]['lr']))
