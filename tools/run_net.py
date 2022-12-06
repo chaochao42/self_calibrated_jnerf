@@ -4,7 +4,7 @@ from tqdm import tqdm
 import argparse
 import numpy as np
 import os
-from jnerf.runner import Runner,NeuSRunner, NeuS_Trainable_Runner
+from jnerf.runner import Runner,NeuSRunner, NeuS_Trainable_Runner, NeuS_Trainable_Freezed_Runner
 from jnerf.utils.config import init_cfg, get_cfg
 from jnerf.utils.registry import build_from_cfg,NETWORKS,SCHEDULERS,DATASETS,OPTIMS,SAMPLERS,LOSSES
 # jt.flags.gopt_disable=1
@@ -46,7 +46,7 @@ def main():
     
     args = parser.parse_args()
 
-    assert args.type in ["novel_view","mesh", "self_calibrated"],f"{args.type} not support, please choose [novel_view, mesh]"
+    assert args.type in ["novel_view","mesh", "self_calibrated", "self_calibrated_freezed"],f"{args.type} not support, please choose [novel_view, mesh]"
     assert args.task in ["train","test","render", "validate_mesh"],f"{args.task} not support, please choose [train, test, render, validate_mesh]"
     
     if args.task == 'validate_mesh':
@@ -61,6 +61,8 @@ def main():
         runner = NeuSRunner() #is_continue=is_continue)
     elif args.type == 'self_calibrated':
         runner = NeuS_Trainable_Runner()
+    elif args.type == 'self_calibrated_freezed':
+        runner = NeuS_Trainable_Freezed_Runner()
     else:
         print('Not support yet!')
 
