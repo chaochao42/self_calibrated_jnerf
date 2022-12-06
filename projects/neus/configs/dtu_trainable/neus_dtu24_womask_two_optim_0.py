@@ -81,12 +81,12 @@ optim = dict(
 
 camera_optim = dict(
     type='Adam',
-    lr=5e-5,
+    lr=5e-6,
     eps=1e-15,
     betas=(0.9,0.99),
 )
 
-base_exp_dir = '../log/trainable_dtu_scan24/test'
+base_exp_dir = '../log/trainable_dtu_scan24/two_optim/low_rate'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05

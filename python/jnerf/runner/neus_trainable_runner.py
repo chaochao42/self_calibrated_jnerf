@@ -61,9 +61,9 @@ class NeuS_Trainable_Runner:
         self.renderer.set_neus_network(self.neus_network)
 
         self.learning_rate = self.cfg.optim.lr
-        self.optimizer = build_from_cfg(self.cfg.optim, OPTIMS, params=self.neus_network.parameters() + [self.dataset.pose_all])
+        self.optimizer = build_from_cfg(self.cfg.optim, OPTIMS, params=self.neus_network.parameters()) # + [self.dataset.pose_all])
         self.global_loss = GlobalLoss()
-        # self.camera_optimizer = build_from_cfg(self.cfg.camera_optim, OPTIMS, params=[self.dataset.pose_all])
+        self.camera_optimizer = build_from_cfg(self.cfg.camera_optim, OPTIMS, params=[self.dataset.pose_all])
         # Load checkpoint
         latest_model_name = None
         if is_continue:
@@ -130,24 +130,27 @@ class NeuS_Trainable_Runner:
 
             loss = color_fine_loss + \
                    eikonal_loss * self.igr_weight + \
-                   mask_loss * self.mask_weight + \
-                   global_loss * self.global_weight
+                   mask_loss * self.mask_weight
+
+
+            camera_loss =  color_fine_loss + \
+                   eikonal_loss * self.igr_weight  + global_loss * self.global_weight
 
             self.optimizer.zero_grad()
-            self.optimizer.backward(loss)
+            self.optimizer.backward(loss, retain_graph=True)
 
 
-            # self.camera_optimizer.zero_grad()
-            # self.camera_optimizer.backward(loss)
+            self.camera_optimizer.zero_grad()
+            self.camera_optimizer.backward(camera_loss)
 
             self.optimizer.step()
-            # self.camera_optimizer.step()
+            self.camera_optimizer.step()
             self.iter_step += 1
 
 
             ######### For freeze##########
             #print(self.optimizer.param_groups)
-            print(type(self.optimizer.param_groups[0]['params']))
+            # print(type(self.optimizer.param_groups[0]['params']))
 
             ##########################################
             if self.iter_step % self.report_freq == 0:
