@@ -9,7 +9,7 @@ from jnerf.utils.registry import ENCODERS
 
 
 @ENCODERS.register_module()
-class FrequencyEncoder(nn.Module):
+class FrequencyBarfEncoder(nn.Module):
     def __init__(self, multires, include_input=True, input_dims=3, log_sampling=True, periodic_fns=[jt.sin, jt.cos]):
         self.cfg = get_cfg()
         self.using_fp16 = self.cfg.fp16

@@ -54,6 +54,8 @@ python/jnerf/models/position_encoders/freq_encoder/__pycache__/__init__.cpython-
 python/jnerf/models/position_encoders/freq_encoder/__pycache__/freq_encoder.cpython-38.pyc
 python/jnerf/models/position_encoders/freqbarf_encoder/__init__.py
 python/jnerf/models/position_encoders/freqbarf_encoder/freqbarf_encoder.py
+python/jnerf/models/position_encoders/freqbarf_encoder/__pycache__/__init__.cpython-38.pyc
+python/jnerf/models/position_encoders/freqbarf_encoder/__pycache__/freqbarf_encoder.cpython-38.pyc
 python/jnerf/models/position_encoders/hash_encoder/__init__.py
 python/jnerf/models/position_encoders/hash_encoder/grid_encode.py
 python/jnerf/models/position_encoders/hash_encoder/hash_encoder.py
