@@ -10,25 +10,27 @@ from jnerf.utils.registry import ENCODERS
 
 @ENCODERS.register_module()
 class FrequencyBarfEncoder(nn.Module):
-    def __init__(self, multires, include_input=True, input_dims=3, log_sampling=True, periodic_fns=[jt.sin, jt.cos]):
+    def __init__(self, multires, include_input=False, input_dims=3, barf_c2f=[0, 0.6], log_sampling=True, periodic_fns=[jt.sin, jt.cos]):
         self.cfg = get_cfg()
         self.using_fp16 = self.cfg.fp16
         self.multires = multires
-        self.include_input = include_input
+        # self.include_input = include_input
         self.input_dims = input_dims
         self.max_freq_log2 = multires - 1
         self.num_freqs = multires
         self.log_sampling = log_sampling
         self.periodic_fns = periodic_fns
+        self.barf_c2f = barf_c2f
+        self.iter_step_percentage = 0
         self.create_embedding_fn()
-
+        self.k = jt.Var(np.array(list(range(0, self.multires))))
     def create_embedding_fn(self):
         embed_fns = []
         d = self.input_dims
         out_dim = 0
-        if self.include_input:
-            embed_fns.append(lambda x: x)
-            out_dim += d
+        # if self.include_input:
+        #     embed_fns.append(lambda x: x)
+        out_dim += d
 
         max_freq = self.max_freq_log2
         N_freqs = self.num_freqs
@@ -47,7 +49,21 @@ class FrequencyBarfEncoder(nn.Module):
         self.out_dim = out_dim
 
     def execute(self, x):
+
+        res_lis = []
+        res_lis.append(x)
         res = jt.concat([fn(x) for fn in self.embed_fns], -1)
+
+        start, end = self.barf_c2f
+        alpha = (self.iter_step_percentage - start) /(end - start) * self.multires
+        weight = (1-(alpha - self.k).clamp_(min_v=0, max_v=1).multiply_(np.pi).cos())/2
+
+        shape = res.shape
+
+        res = (jt.reshape(res, (-1, self.multires))*weight).reshape(shape)
+        res_lis.append(res)
+        res_lis = jt.concat(res_lis, -1)
+
         if self.using_fp16:
-            res = res.float16()
-        return res
+            res_lis = res_lis.float16()
+        return res_lis
