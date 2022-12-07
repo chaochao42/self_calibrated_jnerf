@@ -44,6 +44,7 @@ class NeuS_Trainable_Barf_Runner:
         self.use_white_bkgd = self.cfg.use_white_bkgd
         self.warm_up_end = self.cfg.warm_up_end
         self.anneal_end = self.cfg.anneal_end
+        self.freeze_ratio = self.cfg.freeze_ratio
 
         # Weights
         self.igr_weight = self.cfg.igr_weight
@@ -133,20 +134,20 @@ class NeuS_Trainable_Barf_Runner:
                    eikonal_loss * self.igr_weight + \
                    mask_loss * self.mask_weight
 
-            if self.iter_step < int(self.end_iter * 0.7) :
+            if self.iter_step < int(self.end_iter * self.freeze_ratio) :
                 camera_loss =  color_fine_loss + \
                        eikonal_loss * self.igr_weight  + global_loss * self.global_weight
 
             self.optimizer.zero_grad()
             self.optimizer.backward(loss, retain_graph=True)
 
-            if self.iter_step < int(self.end_iter * 0.7):
+            if self.iter_step < int(self.end_iter * self.freeze_ratio):
                 self.camera_optimizer.zero_grad()
                 self.camera_optimizer.backward(camera_loss)
 
             self.optimizer.step()
 
-            if self.iter_step < int(self.end_iter * 0.7):
+            if self.iter_step < int(self.end_iter * self.freeze_ratio):
                 self.camera_optimizer.step()
             self.iter_step += 1
 
