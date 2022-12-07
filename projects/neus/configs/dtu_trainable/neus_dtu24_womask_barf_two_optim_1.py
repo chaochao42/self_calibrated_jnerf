@@ -10,21 +10,25 @@ dataset = dict(
 encoder = dict(
     nerf_pos_encoder = dict(
         type='FrequencyBarfEncoder',
+        barf_c2f=[0, 0.2],
         multires=10,
         input_dims=4,
     ),
     nerf_dir_encoder = dict(
         type='FrequencyBarfEncoder',
+        barf_c2f=[0, 0.2],
         multires=4,
         input_dims=3,
     ),
     sdf_encoder = dict(
         type='FrequencyBarfEncoder',
+        barf_c2f=[0, 0.2],
         multires=6,
         input_dims=3,
     ),
     rendering_encoder = dict(
         type='FrequencyBarfEncoder',
+        barf_c2f=[0, 0.2],
         multires=4,
         input_dims=3,
     ),
@@ -86,7 +90,7 @@ camera_optim = dict(
     betas=(0.9,0.99),
 )
 
-base_exp_dir = '../log/trainable_dtu_scan24/barf_freezed/0'
+base_exp_dir = '../log/trainable_dtu_scan24/barf_freezed/1'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05
