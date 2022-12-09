@@ -1,6 +1,6 @@
 dataset = dict(
     type = 'NeuSDataset',
-    dataset_dir = '/home/hj2/3d/jnerf/data/dtu_scan24',
+    dataset_dir = '/home/hj2/3d/jnerf/data/baseline_dtu/dtu_scan24',
     render_cameras_name = 'cameras_sphere.npz',
     object_cameras_name = 'cameras_sphere.npz',
 )
@@ -77,7 +77,7 @@ optim = dict(
     betas=(0.9,0.99),
 )
 
-base_exp_dir = '../log/dtu_scan24/womask'
+base_exp_dir = '../log/baseline/dtu_scan24'
 recording = [ './','./models']
 
 learning_rate_alpha = 0.05
