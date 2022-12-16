@@ -5,7 +5,7 @@ import mcubes
 import os
 import argparse
 from plyfile import PlyData, PlyElement
-from jnerf.runner import Runner
+from jnerf.runner import Runner, NeuSRunner
 from jnerf.utils.config import init_cfg
 import time
 from tqdm import tqdm
@@ -34,9 +34,10 @@ def mesh():
     print(args)
     if args.config_file:
         init_cfg(args.config_file)
-    runner = Runner()
-    runner.load_ckpt(runner.ckpt_path)
-    mesh_dir = runner.save_path
+    # runner = Runner()
+    runner = NeuSRunner(is_continue=True)
+    # runner.load_checkpoint(runner.ckpt_path)
+    mesh_dir = runner.base_exp_dir
     aabb_scale = runner.dataset["train"].aabb_scale
     N = args.resolution
     xmin, xmax = 0, 1

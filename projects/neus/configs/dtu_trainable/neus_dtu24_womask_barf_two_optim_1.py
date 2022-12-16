@@ -92,7 +92,7 @@ camera_optim = dict(
 
 base_exp_dir = '../log/trainable_dtu_scan24/barf_freezed/1'
 recording = [ './','./models']
-
+freeze_ratio = 0.8
 learning_rate_alpha = 0.05
 end_iter = 300000
 

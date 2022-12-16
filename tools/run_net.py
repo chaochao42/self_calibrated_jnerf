@@ -47,7 +47,7 @@ def main():
     args = parser.parse_args()
 
     assert args.type in ["novel_view","mesh", "self_calibrated", "self_calibrated_freezed", "self_calibrated_barf"],f"{args.type} not support, please choose [novel_view, mesh]"
-    assert args.task in ["train","test","render", "validate_mesh"],f"{args.task} not support, please choose [train, test, render, validate_mesh]"
+    assert args.task in ["train","test","render", "validate_mesh", "generate_depth"],f"{args.task} not support, please choose [train, test, render, validate_mesh]"
     
     if args.task == 'validate_mesh':
         is_continue = True
@@ -75,7 +75,9 @@ def main():
     elif args.task == "render":
         runner.render(True, args.save_dir)
     elif args.task == 'validate_mesh':
-        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
+        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold, name="validate", auto_load=True)
+    elif args.task == 'generate_depth':
+        runner.validate_debug_image(idx=0, auto_load=True)
 
 if __name__ == "__main__":
     main()
