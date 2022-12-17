@@ -84,7 +84,7 @@ learning_rate_alpha = 0.05
 end_iter = 300000
 
 batch_size = 512
-validate_resolution_level = 6
+validate_resolution_level = 4
 warm_up_end = 5000
 anneal_end = 50000
 use_white_bkgd = False

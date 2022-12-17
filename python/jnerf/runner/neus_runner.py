@@ -355,6 +355,8 @@ class NeuSRunner:
         if resolution_level < 0:
             resolution_level = self.validate_resolution_level
         rays_o, rays_d = self.dataset.gen_rays_at(idx, resolution_level=resolution_level)
+        # [300, 400, 3], [300, 400, 3]
+
         H, W, _ = rays_o.shape
         rays_o = rays_o.reshape(-1, 3).split(self.batch_size)
         rays_d = rays_d.reshape(-1, 3).split(self.batch_size)
@@ -364,6 +366,13 @@ class NeuSRunner:
         out_depth_fine = []
 
         for rays_o_batch, rays_d_batch in zip(rays_o, rays_d):
+            # Two cases:
+            # Case 1:
+            # inside rays_o_batch shape: [512, 3,]; inside rays_d_batch shape: [512, 3,].
+            # before depth: [512, 128,] after depth: (512,)
+            # Case 2:
+            # inside rays_o_batch shape: [192, 3,]; inside rays_d_batch shape: [192, 3,].
+            # before depth: [192, 128,] after depth: (192,)
             near, far = self.dataset.near_far_from_sphere(rays_o_batch, rays_d_batch)
             background_rgb = jt.ones([1, 3]) if self.use_white_bkgd else None
 
@@ -382,12 +391,14 @@ class NeuSRunner:
 
             if feasible('gradients') and feasible('weights') and feasible('z_vals'):
                 n_samples = self.renderer.n_samples + self.renderer.n_importance
+
                 normals = render_out['gradients'] * render_out['weights'][:, :n_samples, None]
                 depths = render_out['z_vals'] * (render_out['weights'][:, :n_samples])
 
                 if feasible('inside_sphere'):
                     normals = normals * render_out['inside_sphere'][..., None]
                     depths = depths * render_out['inside_sphere']
+
 
                 normals = normals.sum(dim=1).detach().numpy()
                 depths = depths.sum(dim=1).detach().numpy()
@@ -402,10 +413,15 @@ class NeuSRunner:
             img_fine = (np.concatenate(out_rgb_fine, axis=0).reshape([H, W, 3, -1]) * 256).clip(0, 255)
 
         depth_fine = None
+        print(f"=========Len out_depth_fine: {len(out_depth_fine)}")
         if len(out_depth_fine) > 0:
-            depth_fine = np.concatenate(out_depth_fine, axis=0).reshape([H, W])
-            depth_fine = cv.applyColorMap((depth_fine * 255).astype(np.uint8), cv.COLORMAP_JET)
-            depth_fine = depth_fine.reshape([H, W, 3, 1])
+            depth_fine = np.concatenate(out_depth_fine, axis=0).reshape([H, W])  # shape: (H, W)
+            print(f"===========Max value: {depth_fine.max()} and Min value {depth_fine.min()}")
+            np.save("raw_depth.npy", depth_fine)
+            depth_fine = cv.applyColorMap((depth_fine * 255).astype(np.uint8), cv.COLORMAP_JET)  # shape: (H, W, 3)
+
+            depth_fine = depth_fine.reshape([H, W, 3, 1])  # shape: (H, W, 3, 1)
+
 
         normal_img = None
         if len(out_normal_fine) > 0:

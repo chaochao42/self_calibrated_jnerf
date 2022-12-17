@@ -102,7 +102,7 @@ warm_up_end = 5000
 anneal_end = 50000
 use_white_bkgd = True
 
-save_freq = 100
+save_freq = 3000
 val_freq = 1000
 val_mesh_freq = 5000
 report_freq = 100
