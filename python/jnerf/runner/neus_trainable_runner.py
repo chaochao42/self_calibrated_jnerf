@@ -196,13 +196,14 @@ class NeuS_Trainable_Runner:
         checkpoint = jt.load(os.path.join(self.base_exp_dir, 'checkpoints', checkpoint_name))
         self.neus_network.load_state_dict(checkpoint['neus'])
         self.iter_step = checkpoint['iter_step']
-
+        self.dataset.pose_all = jt.Var(checkpoint['trained_pose'])
         logging.info('End')
 
     def save_checkpoint(self):
         checkpoint = {
             'neus': self.neus_network.state_dict(),
             'iter_step': self.iter_step,
+            'trained_pose': self.dataset.pose_all,
         }
 
         os.makedirs(os.path.join(self.base_exp_dir, 'checkpoints'), exist_ok=True)

@@ -418,10 +418,6 @@ class NeuSRunner:
             depth_fine = cv.applyColorMap((depth_fine * 255).astype(np.uint8), cv.COLORMAP_JET)
             depth_fine = depth_fine.reshape([H, W, 3, 1])
 
-        # os.makedirs(os.path.join(self.base_exp_dir, 'validations_fine'), exist_ok=True)
-        # os.makedirs(os.path.join(self.base_exp_dir, 'normals'), exist_ok=True)
-        # os.makedirs(os.path.join(self.base_exp_dir, 'depths'), exist_ok=True)
-
         for i in range(img_fine.shape[-1]):
             if len(out_rgb_fine) > 0:
                 cv.imwrite(os.path.join(self.base_exp_dir,
